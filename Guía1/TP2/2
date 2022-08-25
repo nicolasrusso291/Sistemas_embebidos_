@@ -1,0 +1,25 @@
+#include "mbed.h"
+#include "arm_book_lib.h"
+
+int main()
+{
+    DigitalIn gasDetector(D2); // Define el pin D2 como entrada digital y la llama gasDetector, en la misma irá el sensor de gas
+
+    DigitalOut alarmLed(LED1); // Define el LED1 como salida digital y la llama alarmLed, 
+
+    gasDetector.mode(PullDown); // Configura la entrada gasDetector como un PullDown, es decir, al presionar el boton cambia del estado 0 a 1
+
+    alarmLed = OFF; // Inicializa el led de salida en 0, estado apagado
+
+    printf("Hello world");
+
+    while (true) {  // Comienza a correr el loop
+        if ( gasDetector == ON ) {  // Si la entrada del detector se encuentra en 1
+            alarmLed = ON;          // se enciende el led de alarma
+        }
+        
+        if ( gasDetector == OFF ) { // Si la entrada del detector se encuentra en 0
+            alarmLed = OFF;         // se apaga el led de alarma
+        }
+    }
+}
