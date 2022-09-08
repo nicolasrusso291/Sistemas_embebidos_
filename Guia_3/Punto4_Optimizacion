@@ -119,13 +119,43 @@ bool Detector=OFF; //esto va en declaracion de variables
             alarmLed=!alarmLed
             delay(BLINKING_TIME_GAS_AND_OVER_TEMP_ALARM) //@note{puede ser una o las 2 alarmas, pierde funcionalidad pero es mucho menos lineas}
         }
-        //@note{el else no es necesario alarmState deberia ser apagada con el codigo}              
+        //@note{el else no es necesario alarmState deberia ser apagada con alarmDeactivationUpdate()}              
 */
 }
 
 void alarmDeactivationUpdate()
 {
     if ( numberOfIncorrectCodes < 5 ) {
+        
+        /*
+        @brief{
+            Checkear si incorrect led primero, total lo hago en el if, de  enterButton && !incorrectCodeLed && alarmState 
+            y asi cuando no esta activado incorrect code no hago el if de si a,b,c,d y enter estan apretados
+        }
+        @code{
+            if (!incorrectCodeLed){ //agrego esto
+                if ( enterButton && !incorrectCodeLed && alarmState ) {
+                    buttonsPressed[0] = aButton;
+                    buttonsPressed[1] = bButton;
+                    buttonsPressed[2] = cButton;
+                    buttonsPressed[3] = dButton;
+                    if ( areEqual() ) {
+                        alarmState = OFF;
+                        numberOfIncorrectCodes = 0;
+                    } else {
+                        incorrectCodeLed = ON;
+                        numberOfIncorrectCodes++;
+                    }
+        }
+            }
+            else{
+                 //muevo esto:
+                if ( aButton && bButton && cButton && dButton && !enterButton ) {
+                incorrectCodeLed = OFF;
+            }
+        }
+
+        */
         if ( aButton && bButton && cButton && dButton && !enterButton ) {
             incorrectCodeLed = OFF;
         }
